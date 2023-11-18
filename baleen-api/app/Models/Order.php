@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Order extends Model
+{
+    use HasFactory;
+    protected $table = 'order_table';
+    protected $fillable = [
+        'EntryDate',
+        'EntryUser',
+        'OrderNumber',
+        'OrderDate',
+        'FeedBack',
+        'Suggestions',
+        'Source',
+        'Owner',
+        'CSE',
+        'BDE',
+        'Receivable',
+        'Payable',
+        'CardRatePerUnit',
+        'Commission',
+        'ConsultantName',
+        'Commissiontowhom',
+        'Margin',
+        'Card',
+        'vendorName',
+        'bold',
+        'semibold',
+        'tick',
+        'color',
+        'AdCategory',
+        'AdType',
+        'AdWidth',
+        'AdHeight',
+        'Position',
+        'GST',
+        'ClientName',
+        'ClientCategory',
+        'ClientGST',
+        'ClientPAN',
+        'DoorStreet',
+        'Area',
+        'City',
+        'State',
+        'PIN',
+        'ClientContact',
+        'ClientAuthorizedPerson',
+        'CancelFlag',
+        'PaymentMode',
+        'PaidRelease',
+        'DiscountedRelease',
+        'DiscountedPercentage',
+        'BookedStatus',
+        'InvoiceNo',
+        'InvoiceStatus',
+        'RoStaus',
+        'RoMaterialShared',
+        'ReceivableAmountTallyDate',
+        'RepeatBusiness',
+        'MinHeight',
+        'MinWidth',
+        'Units',
+        'MinPrice',
+        'DateOfFirstRelease',
+        'DateOfLastRelease',
+        'TDSAmount',
+        'BadDebtAmount',
+        'RoundOffSize',
+        'Special T & C',
+        'ImageId',
+        'ServiceProvided',
+        'ServiceFeedbackSent',
+        'ReleaseAlert',
+        'ContactPerson',
+        'BadDebtAccountedAmount',
+        'BalanceBadDebt',
+        'ClientApprovalCode',
+        'ClientApprovalFlag',
+        'WOApprovalFlag',
+        'CampaignDays',
+        'SpotsPerDay',
+        'SpotDuration',
+        'Remarks',
+    ];
+
+    protected $casts = [
+        'OrderDate' => 'date',
+        'ReceivableAmountTallyDate' => 'date',
+        'DateOfFirstRelease' => 'date',
+        'DateOfLastRelease' => 'date',
+        'Special T & C' => 'array',
+    ];
+
+    // You may want to customize $dates array if necessary
+}

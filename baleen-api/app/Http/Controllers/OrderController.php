@@ -22,4 +22,27 @@ class OrderController extends Controller
             ], 500);
         }
     }
+    public function getOrderDetailbyOrderNo($orderNumber)
+    {
+        try {
+            $order = Order::where('OrderNumber', $orderNumber)->first();
+
+            if (!$order) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Order not found',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $order,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }

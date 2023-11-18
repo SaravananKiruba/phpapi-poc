@@ -17,6 +17,8 @@ use App\Http\Controllers\OrderController;
 
 
 Route::get('/getorderdetails', [OrderController::class, 'getOrderDetails']);
+Route::get('/order-details/{orderNumber}', [OrderController::class, 'getOrderDetailbyOrderNo']);
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -25,8 +25,8 @@ class OrderController extends Controller
     public function getlatest100Records()
     {
         try {
-            $orders = Order::orderBy('EntryDate', 'desc')->take(100)->get();
-    
+            $orders = Order::orderBy('OrderNumber', 'desc')->take(100)->get();
+
             return response()->json([
                 'success' => true,
                 'data' => $orders,
@@ -38,7 +38,7 @@ class OrderController extends Controller
             ], 500);
         }
     }
-    
+
 
     public function getOrderDetailbyOrderNo($orderNumber)
     {

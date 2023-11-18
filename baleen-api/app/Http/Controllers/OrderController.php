@@ -22,6 +22,24 @@ class OrderController extends Controller
             ], 500);
         }
     }
+    public function getlatest100Records()
+    {
+        try {
+            $orders = Order::orderBy('EntryDate', 'desc')->take(100)->get();
+    
+            return response()->json([
+                'success' => true,
+                'data' => $orders,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    
+
     public function getOrderDetailbyOrderNo($orderNumber)
     {
         try {

@@ -18,6 +18,7 @@ use App\Http\Controllers\OrderController;
 
 Route::get('/getorderdetails', [OrderController::class, 'getOrderDetails']);
 Route::get('/order-details/{orderNumber}', [OrderController::class, 'getOrderDetailbyOrderNo']);
+Route::get('/getlatest100Records', [OrderController::class, 'getlatest100Records']);
 
 
 

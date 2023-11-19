@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order; // Assuming your model is named Order
+use Illuminate\Http\Request; // Add this import for the Request class
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -22,10 +23,34 @@ class OrderController extends Controller
             ], 500);
         }
     }
-    public function getlatest100Records()
+
+    public function getLatest100Records(Request $request)
     {
         try {
-            $orders = Order::orderBy('OrderNumber', 'desc')->take(100)->get();
+            $perPage = 25;
+
+            $query = Order::query();
+
+            // Filtering
+            $columns = ['OrderNumber', 'OrderDate', 'EntryUser', 'CSE', 'Owner', 'ClientName'];
+            $filter = $request->input('filter');
+
+            if ($filter) {
+                $query->where(function ($q) use ($filter, $columns) {
+                    foreach ($columns as $column) {
+                        $q->orWhere($column, 'like', "%$filter%");
+                    }
+                });
+            }
+
+            // Sorting
+            $sortBy = $request->input('sort_by', 'OrderNumber');
+            $sortDirection = $request->input('sort_direction', 'desc');
+            if (in_array($sortBy, $columns)) {
+                $query->orderBy($sortBy, $sortDirection);
+            }
+
+            $orders = $query->paginate($perPage);
 
             return response()->json([
                 'success' => true,
@@ -38,7 +63,6 @@ class OrderController extends Controller
             ], 500);
         }
     }
-
 
     public function getOrderDetailbyOrderNo($orderNumber)
     {

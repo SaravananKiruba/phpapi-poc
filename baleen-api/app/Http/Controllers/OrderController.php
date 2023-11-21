@@ -24,34 +24,31 @@ class OrderController extends Controller
         }
     }
 
-    public function getLatest100Records(Request $request)
+    public function getOrders(Request $request)
     {
         try {
-            $perPage = 25;
-
+            $perPage = $request->input('perPage', 25);
             $query = Order::query();
-
+    
             // Filtering
-            $columns = ['OrderNumber', 'OrderDate', 'EntryUser', 'CSE', 'Owner', 'ClientName'];
-            $filter = $request->input('filter');
-
-            if ($filter) {
-                $query->where(function ($q) use ($filter, $columns) {
-                    foreach ($columns as $column) {
-                        $q->orWhere($column, 'like', "%$filter%");
-                    }
-                });
+            $filterColumns = ['orderNumber', 'orderDate', 'entryUser', 'cse', 'owner', 'clientName'];
+            foreach ($filterColumns as $column) {
+                $value = $request->input($column);
+                if ($value) {
+                    $query->where($column, 'like', '%' . $value . '%');
+                }
             }
-
+    
             // Sorting
-            $sortBy = $request->input('sort_by', 'OrderNumber');
-            $sortDirection = $request->input('sort_direction', 'desc');
-            if (in_array($sortBy, $columns)) {
+            $sortBy = $request->input('sortColumn', 'orderNumber');
+            $sortDirection = $request->input('sortOrder', 'asc');
+            $validColumns = ['orderNumber', 'orderDate', 'entryUser', 'cse', 'owner', 'clientName'];
+            if (in_array($sortBy, $validColumns)) {
                 $query->orderBy($sortBy, $sortDirection);
             }
-
+    
             $orders = $query->paginate($perPage);
-
+    
             return response()->json([
                 'success' => true,
                 'data' => $orders,
@@ -63,6 +60,9 @@ class OrderController extends Controller
             ], 500);
         }
     }
+    
+    
+    
 
     public function getOrderDetailbyOrderNo($orderNumber)
     {

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,10 @@ use App\Http\Controllers\OrderController;
 Route::get('/getorderdetails', [OrderController::class, 'getOrderDetails']);
 Route::get('/order-details/{orderNumber}', [OrderController::class, 'getOrderDetailbyOrderNo']);
 Route::get('/getOrders', [OrderController::class, 'getOrders']);
+
+
+Route::get('/generate-pdf', [PdfController::class, 'generatePdf']);
+
 
 
 

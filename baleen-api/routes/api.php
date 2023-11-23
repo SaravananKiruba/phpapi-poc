@@ -22,7 +22,7 @@ Route::get('/order-details/{orderNumber}', [OrderController::class, 'getOrderDet
 Route::get('/getOrders', [OrderController::class, 'getOrders']);
 
 
-Route::get('/generate-pdf', [PdfController::class, 'generatePdf']);
+Route::get('/generate-pdf/{orderNumber}', [PdfController::class, 'generatePdf']);
 
 
 

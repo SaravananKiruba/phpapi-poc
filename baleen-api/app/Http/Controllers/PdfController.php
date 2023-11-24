@@ -3,28 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
+use PDF; // Assuming you have the PDF facade alias set up in config/app.php
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 class PdfController extends Controller
 {
     public function generatePdf($orderNumber)
     {
-        // Fetch data from MySQL
-        $data = Order::where('OrderNumber', $orderNumber)->first();
-        
-        if (!$data) {
+        try {
+            // Fetch data from MySQL
+            $data = Order::where('OrderNumber', $orderNumber)->firstOrFail();
+            
             // Generate PDF using Dompdf
             $pdf = PDF::loadView('pdf.view', ['data' => $data]);
 
-            // Save or return the PDF as needed
-            // For example, to save the PDF:
-            // $pdf->save(public_path('pdfs/your_file.pdf'));
+            // Save the PDF to the public/pdfs directory
+            $pdfPath = 'pdfs/'.$orderNumber.'.pdf';
+            $pdf->save(public_path($pdfPath));
 
             // To return the PDF as a response
-            return $pdf->download($orderNumber . '.pdf');
-        }
+            return $pdf->download($pdfPath);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Error generating PDF: ' . $e->getMessage());
 
-        return response()->json(['error' => 'Order not found.'], 404);
+            // Return a more informative error response
+            return response()->json(['error' => 'Failed to generate PDF. See logs for details.'], 500);
+        }
     }
 }

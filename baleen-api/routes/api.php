@@ -20,9 +20,9 @@ use App\Http\Controllers\PdfController;
 Route::get('/getorderdetails', [OrderController::class, 'getOrderDetails']);
 Route::get('/order-details/{orderNumber}', [OrderController::class, 'getOrderDetailbyOrderNo']);
 Route::get('/getOrders', [OrderController::class, 'getOrders']);
-
-
 Route::get('/generate-pdf/{orderNumber}', [PdfController::class, 'generatePdf']);
+
+//Git checking 
 
 
 

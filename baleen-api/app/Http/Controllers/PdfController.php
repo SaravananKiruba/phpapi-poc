@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use PDF; // Assuming you have the PDF facade alias set up in config/app.php
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;

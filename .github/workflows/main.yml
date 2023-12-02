@@ -27,32 +27,5 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Sync files to cPanel
-        uses: appleboy/ssh-action@master
-        with:
-          server: ${{ secrets.CPANEL_HOST }}
-          username: ${{ secrets.CPANEL_USERNAME }}
-          password: ${{ secrets.CPANEL_PASSWORD }}
-          script: |
-            cd /path/to/your/laravel/project
-
-            # Pull the latest changes
-            git pull origin main
-
-            # Install/update Composer dependencies
-            composer install --no-dev --optimize-autoloader
-
-            # Run database migrations
-            php artisan migrate --force
-
-            # Additional commands if needed (e.g., cache clearing)
-            php artisan cache:clear
-            php artisan config:cache
-
-            # Ensure proper directory permissions
-            chmod -R 755 storage bootstrap/cache
-
-            # Restart web server if needed (e.g., Apache or Nginx)
-            # systemctl restart apache2
-
-            # Note: Adjust the commands based on your specific deployment needs
-
+        run: |
+          /usr/bin/docker run --name c2393b837d191033a4300b698e4b66f9d9f9b_5d7e56 --label 6c2393 --workdir /github/workspace --rm -e "INPUT_SERVER=${{ secrets.CPANEL_HOST }}" -e "INPUT_USERNAME=${{ secrets.CPANEL_USERNAME }}" -e "INPUT_PASSWORD=${{ secrets.CPANEL_PASSWORD }}" -e "INPUT_SCRIPT=php artisan deploy" -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/phpapi-poc/phpapi-poc":"/github/workspace" 6c2393:b837d191033a4300b698e4b66f9d9f9b

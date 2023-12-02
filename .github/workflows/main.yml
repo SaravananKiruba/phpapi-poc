@@ -1,14 +1,16 @@
 on: push
+
 name: 🚀 Deploy Laravel API
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2.3.2
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2.3.2
 
-    - name: Install Dependencies
+      - name: Install Dependencies
         run: |
           composer install --no-dev --optimize-autoloader
 
@@ -21,11 +23,10 @@ jobs:
       - name: Set Directory Permissions
         run: chmod -R 755 storage bootstrap/cache
     
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.0.0
-      with:
-        server: ${{ secrets.CPANEL_HOST }
-        username: ${{ secrets.CPANEL_USERNAME }}
-        password: ${{ secrets.CPANEL_PASSWORD }}
-        server-dir: /Kirubatest/api/
-
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          server-dir: /Kirubatest/api/
